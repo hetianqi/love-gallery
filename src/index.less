@@ -1,0 +1,68 @@
+*,
+*:before,
+*:after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+body {
+	position: relative;
+	font-size: 12px;
+	line-height: 1.5;
+	word-break: break-all;
+}
+
+.stage {
+	position: absolute;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;	
+	background-color: #f0f2f5;
+	overflow: hidden;
+}
+.image-list {
+	perspective: 1800px;
+}
+.image-figure {
+	position: absolute;
+	width: 300px;
+	height: 360px;
+	padding: 30px;
+	background-color: #fff;
+	cursor: pointer;
+	transform-origin: 0 50%;
+	transform-style: preserve-3d;
+	transition: all .6s;
+
+	&.is-center {
+		z-index: 101;
+	}
+	&.is-inverse {
+		transform: translate(300px) rotateY(180deg);
+	}
+
+	.image-title {
+		font-size: 20px;
+		line-height: 60px;
+		text-align: center;
+	}
+
+	.image-desc {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		padding: 30px;
+		color: #a7a0a2;
+		font-size: 22px;
+		line-height: 1.25;
+		transform: translateZ(1px) rotateY(180deg);
+        backface-visibility: hidden;
+	}
+}
