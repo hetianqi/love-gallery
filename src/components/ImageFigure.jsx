@@ -6,11 +6,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class ImageFigure extends React.Component {
-	constructor(props) {
-		super(props);
-
-	}
-
 	static propTypes = {
 		url: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
@@ -52,7 +47,7 @@ export default class ImageFigure extends React.Component {
 					src={props.url}
 					alt={props.title} />
 				<figcaption>
-					<h2 className="image-title">{props.title}</h2>
+					<h2 className="image-title">{props.title}</h2>					
 					<p className="image-desc">{props.desc}</p>
 				</figcaption>
 			</figure>

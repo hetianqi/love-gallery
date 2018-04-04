@@ -6,6 +6,14 @@
 	box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "iconfont";
+	src: url("./assets/fonts/iconfont.eot") format("embedded-opentype"), 
+		url("./assets/fonts/iconfont.woff") format("woff"),
+		url("./assets/fonts/iconfont.ttf") format("truetype"),
+		url("./assets/fonts/iconfont.svg") format("svg");
+}
+
 html, body {
 	height: 100%;
 }
@@ -14,6 +22,8 @@ body {
 	font-size: 12px;
 	line-height: 1.5;
 	word-break: break-all;
+	-ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 
 .stage {
@@ -26,7 +36,7 @@ body {
 	overflow: hidden;
 }
 .image-list {
-	perspective: 1800px;
+	perspective: 5000px;
 }
 .image-figure {
 	position: absolute;
@@ -37,16 +47,24 @@ body {
 	cursor: pointer;
 	transform-origin: 0 50%;
 	transform-style: preserve-3d;
-	transition: all .6s;
+	transition: transform .6s ease-in-out,
+				left .6s ease-in-out,
+				top .6s ease-in-out;
 
 	&.is-center {
-		z-index: 101;
+		z-index: 11;
 	}
 	&.is-inverse {
-		transform: translate(300px) rotateY(180deg);
+		transform: translate(100%) rotateY(180deg);
+	}
+
+	img {
+		width: 240px;
+		height: 240px;
 	}
 
 	.image-title {
+		color: #a7a0a2;
 		font-size: 20px;
 		line-height: 60px;
 		text-align: center;
@@ -62,7 +80,45 @@ body {
 		color: #a7a0a2;
 		font-size: 22px;
 		line-height: 1.25;
-		transform: translateZ(1px) rotateY(180deg);
+		background-color: #fff;
         backface-visibility: hidden;
+		transform: rotateY(180deg) translateZ(1px);
+	}
+}
+.image-controller {
+	position: absolute;
+	left: 0;
+	bottom: 50px;
+	z-index: 20; // 这句如果不加则按钮圆角会不完全
+	width: 100%;
+	text-align: center;
+
+	span {
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		margin: 0 5px;
+		border-radius: 50%;
+		vertical-align: middle;
+		background-color: #aaa;
+		cursor: pointer;
+		transform: scale(.5);
+		transition: transform .6s ease-in-out;
+
+		&.is-center {
+			transform: scale(1);
+			background-color: #555;
+		
+			&::before {
+				font-family: iconfont;
+				content: "\e600";
+				line-height: 30px;
+				color: #fff;
+			}
+		}
+
+		&.is-inverse {
+			transform: rotateY(180deg);
+		}
 	}
 }

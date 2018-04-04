@@ -4,11 +4,13 @@
 
 import React from 'react';
 import ImageFigure from './ImageFigure';
+import ImageConroller from './ImageController';
 
-const imageDatas = require('../data/imageDatas.json');
+const imageDatas = require('../assets/data/imageDatas.json');
+const bgm = require('../assets/medias/Richard Clayderman - 梦中的婚礼.mp3');
 
 imageDatas.forEach((data) => {
-	data.url = require(`../images/${data.fileName}`);
+	data.url = require(`../assets/images/${data.fileName}`);
 });
 
 function getRandomInteger(min, max) {
@@ -16,7 +18,7 @@ function getRandomInteger(min, max) {
 }
 
 function get30Deg() {
-	return (Math.round() < 0.5 ? -1 : 1) * getRandomInteger(0, 30);
+	return (Math.random() < 0.5 ? -1 : 1) * getRandomInteger(0, 30);
 }
 
 export default class Stage extends React.Component {
@@ -91,15 +93,13 @@ export default class Stage extends React.Component {
 		this.leftPosRange.y[1] = Math.round(stageHeight - figureHeight);
 
 		this.rightPosRange.x[0] = Math.round((stageWidth + figureWidth) / 2);
-		this.rightPosRange.x[1] = stageWidth;
+		this.rightPosRange.x[1] = Math.round(stageWidth - figureWidth / 2);
 		this.rightPosRange.y[0] = this.leftPosRange.y[0];
 		this.rightPosRange.y[1] = this.leftPosRange.y[1];
 
 		this.topPosRange.x = this.centerPos.x;
 		this.topPosRange.y[0] = this.leftPosRange.y[0];
 		this.topPosRange.y[1] = Math.round((stageHeight - figureHeight) / 2 - figureHeight);
-
-		console.log(this);
 	}
 
 	// 排列图片
@@ -164,28 +164,39 @@ export default class Stage extends React.Component {
 	}
 
 	render() {
+		let figures = [],
+			controllers = [];
+		
+		this.state.imageDatas.forEach((data, index) => {
+			figures.push(<ImageFigure 
+				key={data.fileName}
+				url={data.url}
+				title={data.title}
+				desc={data.desc}
+				pos={data.pos}
+				rotate={data.rotate}
+				isCenter={data.isCenter}
+				isInverse={data.isInverse}
+				imageFigureRef={ref => this.imageFigureRef = ref}
+				onClick={this.handleImageFigureClick(index)} />);
+			controllers.push(<ImageConroller 
+				key={data.fileName}
+				isCenter={data.isCenter}
+				isInverse={data.isInverse}
+				onClick={this.handleImageFigureClick(index)}
+			/>);
+		});
+
 		return (
 			<section
 				className="stage"
 				ref={ref => this.stageRef = ref}>
-				<section className="image-list">
-					{this.state.imageDatas.map((data, index) => (
-						<ImageFigure 
-							key={data.fileName}
-							url={data.url}
-							title={data.title}
-							desc={data.desc}
-							pos={data.pos}
-							rotate={data.rotate}
-							isInverse={data.isInverse}
-							isCenter={data.isCenter}
-							imageFigureRef={ref => this.imageFigureRef = ref}
-							onClick={this.handleImageFigureClick(index)} />
-					))}
-				</section>
-				<nav className="menu">
-
-				</nav>
+				<section className="image-list">{figures}</section>
+				<nav className="image-controller">{controllers}</nav>
+				<audio 
+					src={bgm}
+					autoPlay
+					loop></audio>
 			</section>
 		);
 	}

@@ -39,20 +39,11 @@ module.exports = {
 			]
 		},
 		{
-			test: /\.(png|gif|jpg|jpeg|bmp)$/i,
+			test: /\.(png|gif|jpg|jpeg|bmp|woff|woff2|svg|ttf|eot|mp3)$/i,
 			use : {
 				loader : 'url-loader',
 				options : {
 					limit : '8192'
-				}
-			}
-		},
-		{
-			test: /\.(woff|woff2|svg|ttf|eot)($|\?)/i,
-			use: {
-				loader: 'url-loader',
-				options: {
-					limit: '8192'
 				}
 			}
 		}]
