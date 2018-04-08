@@ -22,8 +22,6 @@ body {
 	font-size: 12px;
 	line-height: 1.5;
 	word-break: break-all;
-	-ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
 }
 
 .stage {
@@ -36,7 +34,7 @@ body {
 	overflow: hidden;
 }
 .image-list {
-	perspective: 5000px;
+	perspective: 10000px;
 }
 .image-figure {
 	position: absolute;
@@ -55,7 +53,7 @@ body {
 		z-index: 11;
 	}
 	&.is-inverse {
-		transform: translate(100%) rotateY(180deg);
+		transform: translateX(100%) rotateY(180deg);
 	}
 
 	img {
@@ -81,7 +79,7 @@ body {
 		font-size: 22px;
 		line-height: 1.25;
 		background-color: #fff;
-        backface-visibility: hidden;
+		backface-visibility: hidden;
 		transform: rotateY(180deg) translateZ(1px);
 	}
 }
@@ -118,7 +116,7 @@ body {
 		}
 
 		&.is-inverse {
-			transform: rotateY(180deg);
+			transform: scale(1) rotateY(180deg);
 		}
 	}
 }

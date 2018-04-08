@@ -1,10 +1,12 @@
 /**
- * webpack 开发配置
+ * webpack 生成配置
  */
 
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 function join(p) {
 	return path.join(__dirname, p);
@@ -17,7 +19,8 @@ module.exports = {
 	},
 	output: {
 		path: join('../dist'),
-		filename: '[name].js'
+		filename: 'js/[name]_[chunkhash:7].js',
+		publicPath: '/love-gallery/'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '*']
@@ -30,19 +33,17 @@ module.exports = {
 		},
 		{
 			test: /\.less$/,
-			use: [
-				'style-loader', 
-				'css-loader', 
-				'postcss-loader',
-				'less-loader'
-			]
+			use: ExtractTextPlugin.extract({
+				use: ['css-loader', 'postcss-loader', 'less-loader']
+			})
 		},
 		{
 			test: /\.(png|gif|jpg|jpeg|bmp|woff|woff2|svg|ttf|eot|mp3)$/i,
 			use : {
 				loader : 'url-loader',
 				options : {
-					limit : '8192'
+					limit : '8192',
+					name: 'assets/[name]_[hash:7].[ext]'
 				}
 			}
 		}]
@@ -53,25 +54,24 @@ module.exports = {
 				NODE_ENV: JSON.stringify('development') // 环境定义
 			}
 		}),
-		new HtmlWebpackPlugin({
-			filename: path.join(__dirname, '../dist/index.html'),
-			template: path.join(__dirname, '../src/index.html')
+		new CleanWebpackPlugin(['../dist/'], {
+			root: __dirname,
+			verbose: true,
+			allowExternal: true
 		}),
-		new webpack.HotModuleReplacementPlugin(),
+		new HtmlWebpackPlugin({
+			template: join('../src/index.html')
+		}),
+		new ExtractTextPlugin('css/main_[contenthash:6].css', {
+			allChunks: true
+		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
 			minChunks: Infinity
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'manifest'
-		})
-	],
-	devServer: {
-		contentBase: path.join(__dirname, '../dist'),
-		port: 8000,
-		hot: true,
-		compress: true,
-		host: '0.0.0.0',
-		public: 'localhost:8000'
-	}
+		}),
+		new webpack.optimize.UglifyJsPlugin()
+	]
 };

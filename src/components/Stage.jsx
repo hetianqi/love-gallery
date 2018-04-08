@@ -6,7 +6,7 @@ import React from 'react';
 import ImageFigure from './ImageFigure';
 import ImageConroller from './ImageController';
 
-const imageDatas = require('../assets/data/imageDatas.json');
+const imageDatas = require('../assets/datas/imageDatas.json');
 const bgm = require('../assets/medias/Richard Clayderman - 梦中的婚礼.mp3');
 
 imageDatas.forEach((data) => {
@@ -195,7 +195,7 @@ export default class Stage extends React.Component {
 				<nav className="image-controller">{controllers}</nav>
 				<audio 
 					src={bgm}
-					autoPlay
+					// autoPlay
 					loop></audio>
 			</section>
 		);
