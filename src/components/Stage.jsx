@@ -75,6 +75,11 @@ export default class Stage extends React.Component {
 	componentDidMount() {
 		this.calcPos();
 		this.arrangeImages(0);
+
+		window.addEventListener('resize', () => {
+			this.calcPos();
+			this.arrangeImages(this.state.centerIndex);
+		});
 	}
 	
 	// 计算位置信息

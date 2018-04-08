@@ -17,7 +17,7 @@ module.exports = {
 	},
 	output: {
 		path: join('../dist'),
-		filename: '[name].js'
+		filename: 'js/[name].js'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '*']
@@ -42,7 +42,8 @@ module.exports = {
 			use : {
 				loader : 'url-loader',
 				options : {
-					limit : '8192'
+					limit : '8192',
+					name: 'assets/[name].[ext]'
 				}
 			}
 		}]
@@ -54,8 +55,7 @@ module.exports = {
 			}
 		}),
 		new HtmlWebpackPlugin({
-			filename: path.join(__dirname, '../dist/index.html'),
-			template: path.join(__dirname, '../src/index.html')
+			template: join('../src/index.html')
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
